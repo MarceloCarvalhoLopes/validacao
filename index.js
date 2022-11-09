@@ -23,8 +23,44 @@ app.use(session({
 app.use(flash());
 
 app.get("/", (req, res) => {
-    console.log("App is running");
-    res.send("Running")
+    res.render("index");
+    
+    /*console.log("App is running");
+    res.send("Running")*/
+})
+
+app.post("/form", (req, res) => {
+    var {email, nome, pontos} = req.body;
+    
+    var nomeError;
+    var emailError;
+    var pontosError;
+
+
+    if(email == undefined || email == ""){
+        emailError = "O e-mail não pode ser vazio";
+    }
+       
+    if (nome == undefined || nome == ""){
+        nomeError = "O  nome não pode ser vazio";
+    }
+
+    if (pontos == undefined || pontos < 20){
+        pontosError = "Você não pode ter menos de 20 pontos";
+    }
+
+    if (nome.length < 4 ){
+        nomeError = "O nome é muito pequeno"
+    }
+
+    if (emailError != undefined || pontosError !== undefined || nomeError != undefined){
+        res.redirect("/");
+    }else{
+        res.send("Form OK");
+    }
+
+
+    //res.send(email);
 })
 
 app.listen(5678,(req, res) =>{
