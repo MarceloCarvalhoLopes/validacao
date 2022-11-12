@@ -25,7 +25,15 @@ app.use(session({
 app.use(flash());
 
 app.get("/", (req, res) => {
-    res.render("index");
+    var nomeError   = req.flash("nomeError");
+    var emailError  = req.flash("emailError");
+    var pontosError = req.flash("pontosError"); 
+    var email = req.flash("email")
+
+    emailError = (emailError == undefined || emailError.length == 0 ) ? undefined : emailError;
+    email = (email == undefined || email.length == 0)  ? "" : email;
+
+    res.render("index",{emailError,pontosError,nomeError, email:email});
     
     /*console.log("App is running");
     res.send("Running")*/
@@ -56,6 +64,12 @@ app.post("/form", (req, res) => {
     }
 
     if (emailError != undefined || pontosError !== undefined || nomeError != undefined){
+        req.flash("emailError",emailError);
+        req.flash("pontosError",pontosError);
+        req.flash("nomeError",nomeError);
+
+        req.flash("email",email);
+
         res.redirect("/");
     }else{
         res.send("Form OK");

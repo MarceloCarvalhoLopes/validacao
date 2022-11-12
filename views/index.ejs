@@ -9,8 +9,11 @@
 <body>
 
     <form method="post" action="/form">
-        <input type="email" name="email" id="email" placeholder="Email"><br>
+        <%= emailError %> 
+        <input type="email" name="email" id="email" placeholder="Email" value="<%= email %> "><br>       
+        <%= nomeError %> 
         <input type="tex" name="nome" id="nome" placeholder="None"><br>
+        <%= pontosError %>         
         <input type="number" name="ponto" id="ponto" placeholder="Pontos"><br>
         <button>Enviar</button>
     </form>
